@@ -1,0 +1,61 @@
+ pipenv install django==2.1
+ pipenv shell (to run in virtual created environment)
+django-admin startproject <projectname> . (. means current directory)
+python manage.py runserver (to run the application)
+python manage.py startapp movies (create new app-package)
+
+register movies ->models to Settings for migration (e.g    'movies.apps.MoviesConfig')
+python manage.py makemigrations (to create migration)
+python manage.py migrate (to run migration)
+python manage.py sqlmigrate movies 0001 (to check what sql statements are generated during migration)
+
+/admin will open admin panel in django browser
+we need to create superuser
+python manage.py createsuperuser
+username: jehangir
+password: password
+
+Models won't appear in admin panel
+register them with the admin.py (for movies app use admin.py in movies)
+
+from .models import Genre,Movie
+
+admin.site.register(Genre)
+admin.site.register(Movie)
+if any problem exist related to sql just upgrate 
+pip3 install --upgrade django==2.1.5
+
+To see the actual name in models in admin panel during add/delete
+do this to model class
+def __str__(self):
+        return self.name
+To see the other fields do this to admin.py file in app(movies) created folder
+class GenreAdmin(admin.ModelAdmin):
+    list_display = ('id','name')
+
+admin.site.register(Genre,GenreAdmin)
+
+#for api install
+pip install django-tastypie
+
+# for api app
+python manage.py startapp api
+
+#collect static files in a single folder
+python3 manage.py collectstatic
+this will collect all static files in a single folder for publication
+
+for production
+create Heroku.com account
+install Heroku cli
+Heroku --version (check if Heroku cli is installed)
+install package Gunicorn
+pip3 install gunicorn
+create Procfile and add essentials
+
+heroku login
+heroku create -a vidlypython (will create git and app on heroku)
+
+git push heroku master
+heroku ps:scale web=1 (for one server)
+
